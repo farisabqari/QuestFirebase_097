@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.applicationfirebase.Depedencies.AppContainer
 import com.example.applicationfirebase.Depedencies.MahasiswaContainer
 
+
 class MahasiswaApplications : Application() {
     lateinit var container: AppContainer
 
