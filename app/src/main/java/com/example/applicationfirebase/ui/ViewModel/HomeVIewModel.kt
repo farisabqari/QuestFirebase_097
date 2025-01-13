@@ -33,14 +33,24 @@ class HomeViewModel(private val mhs: MahasiswaRepository) : ViewModel() {
                 .catch {
                     mhsUIState = HomeUiState.Error(it) //kondisi halaman home saat error
                 }
-                .collect {
-                    mhsUIState = if (it.isEmpty()) {
+                .collect{
+                    mhsUIState = if (it.isEmpty()){
                         HomeUiState.Error(Exception("belum ada daftar mahasiswa"))
-                    } else {
+                    }
+                    else {
                         HomeUiState.Success(it)
                     }
                 }
         }
     }
 
+    fun deleteMhs(mahasiswa: Mahasiswa) {
+        viewModelScope.launch {
+            try {
+                mhs.deleteMahasiswa(mahasiswa)
+            } catch (e: Exception) {
+                mhsUIState = HomeUiState.Error(e)
+            }
+        }
+    }
 }
