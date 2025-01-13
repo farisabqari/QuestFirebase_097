@@ -11,19 +11,17 @@ import kotlinx.coroutines.launch
 
 class InsertViewModel (
     private val mhs: MahasiswaRepository //untuk menyimpan data ke dalam database
-) : ViewModel() {
+) : ViewModel(){
     var uiEvent: InsertUiState by mutableStateOf(InsertUiState())
         private set //Menyimpan data input dari pengguna (status form saat ini)
     var uiState: FormState by mutableStateOf(FormState.Idle)
         private set //Menyimpan status form, seperti apakah form sedang idle, loading, berhasil, atau error
-
     // Memperbarui state berdasarkan input pengguna
     fun updateState(mahasiswaEvent: MahasiswaEvent) {
         uiEvent = uiEvent.copy(
             insertUiEvent = mahasiswaEvent,
         )
     }
-
     // Validasi data input pengguna
     fun validateFields(): Boolean {
         val event = uiEvent.insertUiEvent
@@ -56,4 +54,63 @@ class InsertViewModel (
         }
     }
 
+    //Mereset semua input form dan status menjadi kondisi awal
+    fun resetForm() {
+        uiEvent = InsertUiState()
+        uiState = FormState.Idle
+    }
+
+    //Menghapus pesan status (misalnya "berhasil" atau "gagal") untuk mengembalikan form ke kondisi awal
+    fun resetSnackBarMessage() {
+        uiState = FormState.Idle
+    }
 }
+
+//Mengatur status form
+sealed class FormState {
+    object Idle : FormState()
+    object Loading : FormState()
+    data class Success(val message: String) : FormState()
+    data class Error(val message: String) : FormState()
+}
+
+//Menyimpan data input form dan status validasi
+data class InsertUiState(
+    val insertUiEvent: MahasiswaEvent = MahasiswaEvent(),
+    val isEntryValid: FormErrorState = FormErrorState(),
+)
+
+//Menyimpan status validasi untuk setiap field form
+data class FormErrorState(
+    val nim: String? = null,
+    val nama: String? = null,
+    val jenis_kelamin: String? = null,
+    val alamat: String? = null,
+    val kelas: String? = null,
+    val angkatan: String? = null
+) {
+    fun isValid(): Boolean {
+        return nim == null && nama == null && jenis_kelamin == null &&
+                alamat == null && kelas == null && angkatan == null
+    }
+}
+
+//data class Variabel yang menyimpan data input form
+data class MahasiswaEvent(
+    val nim: String = "",
+    val nama: String = "",
+    val jenis_kelamin: String = "",
+    val alamat: String = "",
+    val kelas: String = "",
+    val angkatan: String = ""
+)
+
+//menyimpan input form kedalam entity
+fun MahasiswaEvent.toMhsModel(): Mahasiswa = Mahasiswa(
+    nim = nim,
+    nama = nama,
+    jenis_kelamin = jenis_kelamin,
+    alamat = alamat,
+    kelas = kelas,
+    angkatan = angkatan
+)
