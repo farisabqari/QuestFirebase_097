@@ -110,3 +110,15 @@ fun HomeStatus(
     }
 }
 
+@Composable
+fun OnLoading(modifier: Modifier = Modifier) {
+    Column (
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+        Text("Loading.....")
+    }
+}
+
