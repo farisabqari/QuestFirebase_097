@@ -87,7 +87,10 @@ data class FormErrorState(
     val jenis_kelamin: String? = null,
     val alamat: String? = null,
     val kelas: String? = null,
-    val angkatan: String? = null
+    val angkatan: String? = null,
+    val judulSkripsi: String? = null,
+    val dosenPembimbing1: String? = null,
+    val dosenPembimbing2: String? = null
 ) {
     fun isValid(): Boolean {
         return nim == null && nama == null && jenis_kelamin == null &&
@@ -102,7 +105,10 @@ data class MahasiswaEvent(
     val jenis_kelamin: String = "",
     val alamat: String = "",
     val kelas: String = "",
-    val angkatan: String = ""
+    val angkatan: String = "",
+    val judulSkripsi: String = "",
+    val dosenPembimbing1: String ="",
+    val dosenPembimbing2: String =""
 )
 
 //menyimpan input form kedalam entity
@@ -112,5 +118,8 @@ fun MahasiswaEvent.toMhsModel(): Mahasiswa = Mahasiswa(
     jenis_kelamin = jenis_kelamin,
     alamat = alamat,
     kelas = kelas,
-    angkatan = angkatan
+    angkatan = angkatan,
+    judulSkripsi = judulSkripsi,
+    dosenPembimbing1 = dosenPembimbing1,
+    dosenPembimbing2 = dosenPembimbing2
 )

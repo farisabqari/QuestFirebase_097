@@ -11,21 +11,20 @@ import kotlinx.coroutines.tasks.await
 class NetworkMahasiswaRepository(
     private val firestore: FirebaseFirestore
 ) : MahasiswaRepository {
-    override suspend fun getMahasiswa(): Flow<List<Mahasiswa>> = callbackFlow{//mendukung data secara realtime
+
+    override suspend fun getMahasiswa(): Flow<List<Mahasiswa>> = callbackFlow {
         val mhsCollection = firestore.collection("Mahasiswa")
             .orderBy("nama", Query.Direction.ASCENDING)
-            .addSnapshotListener { value, error -> //untuk data listener yang realtime
-
-                //kalau datanya tidak sama dengan null maka data dalam dokumen di masukkan ke model
+            .addSnapshotListener { value, error ->
                 if (value != null) {
                     val mhsList = value.documents.mapNotNull {
                         it.toObject(Mahasiswa::class.java)!!
                     }
-                    trySend(mhsList) //memberikan fungsi untuk mengirim data ke flow
+                    trySend(mhsList)
                 }
             }
-        awaitClose{
-            mhsCollection.remove() //menutup collection
+        awaitClose {
+            mhsCollection.remove()
         }
     }
 
@@ -33,7 +32,7 @@ class NetworkMahasiswaRepository(
         try {
             firestore.collection("Mahasiswa").add(mahasiswa).await()
         } catch (e: Exception) {
-            throw Exception ("Gagal menambahkan data mahasiswa: ${e.message}")
+            throw Exception("Gagal menambahkan data mahasiswa: ${e.message}")
         }
     }
 
@@ -47,7 +46,6 @@ class NetworkMahasiswaRepository(
             throw Exception("Gagal mengupdate data mahasiswa:${e.message}")
         }
     }
-
 
     override suspend fun deleteMahasiswa(mahasiswa: Mahasiswa) {
         try {
