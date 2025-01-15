@@ -22,8 +22,17 @@ Data berhasil di tambah
 
 
 
+
+
+
+
+
+
+
 UCP 
 Tampilan Awal
+
+
 
 ![Updatucp](https://github.com/user-attachments/assets/42949d32-24ce-4058-af01-618964499b2d)
 
@@ -33,7 +42,15 @@ Tampilan Awal
 
 
 
+
+
+
+
+
+
 Tambah Data
+
+
 
 ![tambah databaru](https://github.com/user-attachments/assets/8065f885-62ea-4014-b2a2-5fc20f1a4c6a)
 
@@ -44,7 +61,15 @@ Tambah Data
 
 
 
+
+
+
+
+
 sudah di tambah
+
+
+
 ![sudah di updat](https://github.com/user-attachments/assets/433ea2b3-0203-40a7-af68-caaf53313232)
 
 
